@@ -49,12 +49,21 @@
 module.exports = function createUpdatedCollection(collectionA, objectB) {
     // let summarized = summarize(collectionA);
     // return discount(summarized, objectB.value);
-    let map = new Map();
+    // let map = new Map();
+    // collectionA.forEach(value => {
+    //     map.set(value, map.has(value) ? map.get(value) + 1 : 1);
+    // });
+    // let collectionB = Array.from(map).map(value => {
+    //     return {key: value[0], count: value[1]}
+    // });
+    let collectionB = [];
     collectionA.forEach(value => {
-        map.set(value, map.has(value) ? map.get(value) + 1 : 1);
-    });
-    let collectionB = Array.from(map).map(value => {
-        return {key: value[0], count: value[1]}
+        let res = collectionB.find(val => val.key === value);
+        if (res) {
+            res.count++;
+        } else {
+            collectionB.push({key: value, count: 1});
+        }
     });
     return collectionB.map(item => {
         if (objectB.value.includes(item.key))

@@ -50,13 +50,26 @@
 module.exports = function countSameElements(collection) {
     // let expandedArray = expand(collection);
     // return summarize(expandedArray);
-    let map = new Map();
+    // 使用map数据结构的方法，使用array哈希数组无法使用forEach和map函数
+    // let map = new Map();
+    // collection.forEach(value => {
+    //     let [val, count] = value.split('-');//每一个元素都会执行
+    //     count = count ? Number(count) : 1;//没有"-"的元素count为1
+    //     map.set(val, map.has(val) ? map.get(val) + count : count);
+    // });
+    // return Array.from(map).map(value => {
+    //     return {key: value[0], count: value[1]}
+    // });
+    let result = [];
     collection.forEach(value => {
-        let [val,count]=value.split('-');
-        count=count?Number(count):1;
-        map.set(val, map.has(val) ? map.get(val) + count : count);
+        let [value0,count0] = value.split('-');
+        count0 = count0 ? Number(count0) : 1;
+        let res = result.find(val => val.key === value0);
+        if (res) {
+            res.count+=count0;
+        } else {
+            result.push({key: value0, count: count0});
+        }
     });
-    return Array.from(map).map(value => {
-        return {key: value[0], count: value[1]}
-    });
+    return result;
 };

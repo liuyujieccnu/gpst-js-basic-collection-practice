@@ -74,26 +74,49 @@ module.exports = function createUpdatedCollection(collectionA, objectB) {
     // let expandedArray = expand(collectionA);
     // let summarizedArray = summarize(expandedArray);
     // return discount(summarizedArray, objectB.value);
-    let map = new Map();
+    // let map = new Map();
+    // collectionA.forEach(value => {
+    //     let val, count;
+    //     if (value.length > 2) {
+    //         [val, count] = value.split('-');
+    //         if (!count) {
+    //             [val, count] = value.split(':');
+    //         }
+    //         if (!count) {
+    //             val = value.substring(0, 1);
+    //             count = value.substring(2, value.length - 1);
+    //         }
+    //     }else{
+    //         val = value;
+    //     }
+    //     count = count ? Number(count) : 1;
+    //     map.set(val, map.has(val) ? map.get(val) + count : count);
+    // });
+    // let collectionB = Array.from(map).map(value => {
+    //     return {key: value[0], count: value[1]}
+    // });
+    let collectionB = [];
     collectionA.forEach(value => {
-        let val, count;
+        let value0, count0;
         if (value.length > 2) {
-            [val, count] = value.split('-');
-            if (!count) {
-                [val, count] = value.split(':');
+            [value0, count0] = value.split('-');
+            if (!count0) {
+                [value0, count0] = value.split(':');
             }
-            if (!count) {
-                val = value.substring(0, 1);
-                count = value.substring(2, value.length - 1);
+            if (!count0) {
+                value0 = value.substring(0, 1);
+                count0 = value.substring(2, value.length - 1);
             }
-        }else{
-            val = value;
+        } else {
+            value0 = value;
         }
-        count = count ? Number(count) : 1;
-        map.set(val, map.has(val) ? map.get(val) + count : count);
-    });
-    let collectionB = Array.from(map).map(value => {
-        return {key: value[0], count: value[1]}
+        count0 = count0 ? Number(count0) : 1;
+        let res = collectionB.find(val => val.key === value0);
+        if (res) {
+            res.count += count0;
+        } else {
+            collectionB.push({key: value0, count: count0});
+        }
     });
     return collectionB.map(item => {
         if (objectB.value.includes(item.key))

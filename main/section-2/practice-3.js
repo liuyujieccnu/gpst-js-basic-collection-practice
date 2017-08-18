@@ -63,25 +63,49 @@
 module.exports = function countSameElements(collection) {
     // let expandedArray = expand(collection);
     // return summarize(expandedArray);
-    let map = new Map();
+    // let map = new Map();
+    // collection.forEach(value => {
+    //     let val, count;
+    //     if (value.length > 2) {
+    //         [val, count] = value.split('-');
+    //         if (!count) {
+    //             [val, count] = value.split(':');
+    //         }
+    //         if (!count) {
+    //             val = value.substring(0, 1);
+    //             count = value.substring(2, value.length - 1);
+    //         }
+    //     }else{
+    //         val = value;
+    //     }
+    //     count = count ? Number(count) : 1;
+    //     map.set(val, map.has(val) ? map.get(val) + count : count);
+    // });
+    // return Array.from(map).map(value => {
+    //     return {name: value[0], summary: value[1]}
+    // });
+    let result = [];
     collection.forEach(value => {
-        let val, count;
+        let value0, count0;
         if (value.length > 2) {
-            [val, count] = value.split('-');
-            if (!count) {
-                [val, count] = value.split(':');
+            [value0, count0] = value.split('-');
+            if (!count0) {
+                [value0, count0] = value.split(':');
             }
-            if (!count) {
-                val = value.substring(0, 1);
-                count = value.substring(2, value.length - 1);
+            if (!count0) {
+                value0 = value.substring(0, 1);
+                count0 = value.substring(2, value.length - 1);
             }
-        }else{
-            val = value;
+        } else {
+            value0 = value;
         }
-        count = count ? Number(count) : 1;
-        map.set(val, map.has(val) ? map.get(val) + count : count);
+        count0 = count0 ? Number(count0) : 1;
+        let res = result.find(val => val.name === value0);
+        if (res) {
+            res.summary += count0;
+        } else {
+            result.push({name: value0, summary: count0});
+        }
     });
-    return Array.from(map).map(value => {
-        return {name: value[0], summary: value[1]}
-    });
+    return result;
 };

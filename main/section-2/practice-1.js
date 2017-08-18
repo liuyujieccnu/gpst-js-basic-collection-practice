@@ -21,11 +21,36 @@ module.exports = function countSameElements(collection) {
     //     }
     // }
     // return result;
-    let map = new Map();
+    // let arr = [];
+    // let result = [];
+    // collection.forEach(value => {
+    //     if (typeof (arr[value]) === 'undefined') {
+    //         arr[value] = 1;
+    //     } else {
+    //         arr[value]++;
+    //     }
+    // });
+    // for(let item in arr){
+    //     result.push({key: item, count: arr[item]});
+    // }
+    // return result;
+
+    // let map = new Map();
+    // collection.forEach(value => {
+    //     map.set(value, map.has(value) ? map.get(value) + 1 : 1);
+    // });
+    // return Array.from(map).map(value => {
+    //     return {key: value[0], count: value[1]}
+    // });
+
+    let result = [];
     collection.forEach(value => {
-        map.set(value, map.has(value) ? map.get(value) + 1 : 1);
+        let res = result.find(val => val.key === value);
+        if (res) {
+            res.count++;
+        } else {
+            result.push({key: value, count: 1});
+        }
     });
-    return Array.from(map).map(value => {
-        return {key: value[0], count: value[1]}
-    });
+    return result;
 };
